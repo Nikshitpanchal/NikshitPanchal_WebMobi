@@ -1,0 +1,129 @@
+﻿@model NikshitPanchal_WebMobi.Tbl_products
+
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add</h2>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4> products</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.product_name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.product_name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.product_name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.brand_id, "brand_id", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.brand_id, new List<SelectListItem>(), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.brand_id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.category_id, "category_id", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.category_id, new List<SelectListItem>(), "--Select--", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.product_image, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="controls">
+                <div class="fileupload fileupload-new" data-provides="fileupload">
+                    <input type="hidden" value="" name="">
+                    <div class="input-append">
+                        <span class="btn btn-file">
+                            <input type="file" class="default" id="file" name="filesrefdoc">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.model_year, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.model_year, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.model_year, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.list_price, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.list_price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.list_price, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    BindCategorie(@Model.category_id);
+    BindBrands(@Model.brand_id);
+    function BindCategorie(id) {
+        $.ajax({
+            type: 'Get',
+            url: '@Url.Action("GetAllCategories", "Home")',
+             data: { "cid": id },
+            success: function (result) {
+                $("#category_id").html('');
+                var items;
+                $.each(result, function (i, Case) {
+                        items += "<option value='" + Case.Value + "'>" + Case.Text + "</option>";
+                })
+                $('#category_id').html(items);
+                $("#category_id").chosen({ width: '290px' });
+                $('#category_id').trigger('chosen:updated');
+
+            },
+            complete: function () {
+            }
+        });
+    }
+    function BindBrands(id) {
+        var did = id;
+        $.ajax({
+            type: 'Get',
+            url: '@Url.Action("GetAllBrands", "Home")',
+            data: { "bid": did },
+            success: function (result) {
+                $("#brand_id").html('');
+                var items;
+                $.each(result, function (i, Case) {
+                        items += "<option value='" + Case.Value + "'>" + Case.Text + "</option>";
+                })
+                $('#brand_id').html(items);
+                $("#brand_id").chosen({ width: '290px' });
+                $('#brand_id').trigger('chosen:updated');
+
+            },
+            complete: function () {
+            }
+        });
+    }
+</script>

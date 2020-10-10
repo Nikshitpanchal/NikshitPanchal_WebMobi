@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="InventryDBModelStoreContainer" CdmEntityContainer="InventryDBEntities">
+    <EntitySetMapping Name="Tbl_brands">
+      <EntityTypeMapping TypeName="InventryDBModel.Tbl_brands">
+        <MappingFragment StoreEntitySet="Tbl_brands">
+          <ScalarProperty Name="brand_id" ColumnName="brand_id" />
+          <ScalarProperty Name="brand_name" ColumnName="brand_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_categories">
+      <EntityTypeMapping TypeName="InventryDBModel.Tbl_categories">
+        <MappingFragment StoreEntitySet="Tbl_categories">
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="category_name" ColumnName="category_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tbl_products">
+      <EntityTypeMapping TypeName="InventryDBModel.Tbl_products">
+        <MappingFragment StoreEntitySet="Tbl_products">
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="brand_id" ColumnName="brand_id" />
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="product_image" ColumnName="product_image" />
+          <ScalarProperty Name="model_year" ColumnName="model_year" />
+          <ScalarProperty Name="list_price" ColumnName="list_price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetAllProducts" FunctionName="InventryDBModel.Store.GetAllProducts">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InventryDBModel.GetAllProducts_Result">
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="product_name" ColumnName="product_name" />
+          <ScalarProperty Name="brand_id" ColumnName="brand_id" />
+          <ScalarProperty Name="brand_name" ColumnName="brand_name" />
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="category_name" ColumnName="category_name" />
+          <ScalarProperty Name="product_image" ColumnName="product_image" />
+          <ScalarProperty Name="model_year" ColumnName="model_year" />
+          <ScalarProperty Name="list_price" ColumnName="list_price" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAllBrands" FunctionName="InventryDBModel.Store.GetAllBrands">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InventryDBModel.GetAllBrands_Result">
+          <ScalarProperty Name="brand_id" ColumnName="brand_id" />
+          <ScalarProperty Name="brand_name" ColumnName="brand_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAllCategories" FunctionName="InventryDBModel.Store.GetAllCategories">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InventryDBModel.GetAllCategories_Result">
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="category_name" ColumnName="category_name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

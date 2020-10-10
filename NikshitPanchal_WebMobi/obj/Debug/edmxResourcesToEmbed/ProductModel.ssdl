@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InventryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Tbl_brands">
+    <Key>
+      <PropertyRef Name="brand_id" />
+    </Key>
+    <Property Name="brand_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="brand_name" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_categories">
+    <Key>
+      <PropertyRef Name="category_id" />
+    </Key>
+    <Property Name="category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="category_name" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tbl_products">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="product_name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="brand_id" Type="int" Nullable="false" />
+    <Property Name="category_id" Type="int" Nullable="false" />
+    <Property Name="product_image" Type="varbinary(max)" />
+    <Property Name="model_year" Type="smallint" Nullable="false" />
+    <Property Name="list_price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Tbl_produ__brand__3C69FB99">
+    <End Role="Tbl_brands" Type="Self.Tbl_brands" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tbl_products" Type="Self.Tbl_products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_brands">
+        <PropertyRef Name="brand_id" />
+      </Principal>
+      <Dependent Role="Tbl_products">
+        <PropertyRef Name="brand_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tbl_produ__categ__3B75D760">
+    <End Role="Tbl_categories" Type="Self.Tbl_categories" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tbl_products" Type="Self.Tbl_products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_categories">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="Tbl_products">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="GetAllBrands" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetAllCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetAllProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="InventryDBModelStoreContainer">
+    <EntitySet Name="Tbl_brands" EntityType="Self.Tbl_brands" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_categories" EntityType="Self.Tbl_categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tbl_products" EntityType="Self.Tbl_products" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Tbl_produ__brand__3C69FB99" Association="Self.FK__Tbl_produ__brand__3C69FB99">
+      <End Role="Tbl_brands" EntitySet="Tbl_brands" />
+      <End Role="Tbl_products" EntitySet="Tbl_products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tbl_produ__categ__3B75D760" Association="Self.FK__Tbl_produ__categ__3B75D760">
+      <End Role="Tbl_categories" EntitySet="Tbl_categories" />
+      <End Role="Tbl_products" EntitySet="Tbl_products" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

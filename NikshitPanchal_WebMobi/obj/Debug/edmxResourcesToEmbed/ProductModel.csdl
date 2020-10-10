@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InventryDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Tbl_brands">
+    <Key>
+      <PropertyRef Name="brand_id" />
+    </Key>
+    <Property Name="brand_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="brand_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Tbl_products" Relationship="Self.FK__Tbl_produ__brand__3C69FB99" FromRole="Tbl_brands" ToRole="Tbl_products" />
+  </EntityType>
+  <EntityType Name="Tbl_categories">
+    <Key>
+      <PropertyRef Name="category_id" />
+    </Key>
+    <Property Name="category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="category_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Tbl_products" Relationship="Self.FK__Tbl_produ__categ__3B75D760" FromRole="Tbl_categories" ToRole="Tbl_products" />
+  </EntityType>
+  <EntityType Name="Tbl_products">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="product_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="brand_id" Type="Int32" Nullable="false" />
+    <Property Name="category_id" Type="Int32" Nullable="false" />
+    <Property Name="product_image" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="model_year" Type="Int16" Nullable="false" />
+    <Property Name="list_price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Tbl_brands" Relationship="Self.FK__Tbl_produ__brand__3C69FB99" FromRole="Tbl_products" ToRole="Tbl_brands" />
+    <NavigationProperty Name="Tbl_categories" Relationship="Self.FK__Tbl_produ__categ__3B75D760" FromRole="Tbl_products" ToRole="Tbl_categories" />
+  </EntityType>
+  <Association Name="FK__Tbl_produ__brand__3C69FB99">
+    <End Role="Tbl_brands" Type="Self.Tbl_brands" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tbl_products" Type="Self.Tbl_products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_brands">
+        <PropertyRef Name="brand_id" />
+      </Principal>
+      <Dependent Role="Tbl_products">
+        <PropertyRef Name="brand_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tbl_produ__categ__3B75D760">
+    <End Role="Tbl_categories" Type="Self.Tbl_categories" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tbl_products" Type="Self.Tbl_products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_categories">
+        <PropertyRef Name="category_id" />
+      </Principal>
+      <Dependent Role="Tbl_products">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="InventryDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Tbl_brands" EntityType="Self.Tbl_brands" />
+    <EntitySet Name="Tbl_categories" EntityType="Self.Tbl_categories" />
+    <EntitySet Name="Tbl_products" EntityType="Self.Tbl_products" />
+    <AssociationSet Name="FK__Tbl_produ__brand__3C69FB99" Association="Self.FK__Tbl_produ__brand__3C69FB99">
+      <End Role="Tbl_brands" EntitySet="Tbl_brands" />
+      <End Role="Tbl_products" EntitySet="Tbl_products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tbl_produ__categ__3B75D760" Association="Self.FK__Tbl_produ__categ__3B75D760">
+      <End Role="Tbl_categories" EntitySet="Tbl_categories" />
+      <End Role="Tbl_products" EntitySet="Tbl_products" />
+    </AssociationSet>
+    <FunctionImport Name="GetAllProducts" ReturnType="Collection(InventryDBModel.GetAllProducts_Result)" />
+    <FunctionImport Name="GetAllBrands" ReturnType="Collection(InventryDBModel.GetAllBrands_Result)" />
+    <FunctionImport Name="GetAllCategories" ReturnType="Collection(InventryDBModel.GetAllCategories_Result)" />
+  </EntityContainer>
+  <ComplexType Name="GetAllProducts_Result">
+    <Property Type="Int32" Name="product_id" Nullable="false" />
+    <Property Type="String" Name="product_name" Nullable="false" MaxLength="255" />
+    <Property Type="Int32" Name="brand_id" Nullable="false" />
+    <Property Type="String" Name="brand_name" Nullable="false" MaxLength="255" />
+    <Property Type="Int32" Name="category_id" Nullable="false" />
+    <Property Type="String" Name="category_name" Nullable="false" MaxLength="255" />
+    <Property Type="Binary" Name="product_image" Nullable="true" />
+    <Property Type="Int16" Name="model_year" Nullable="false" />
+    <Property Type="Decimal" Name="list_price" Nullable="false" Precision="10" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="GetAllBrands_Result">
+    <Property Type="Int32" Name="brand_id" Nullable="false" />
+    <Property Type="String" Name="brand_name" Nullable="false" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="GetAllCategories_Result">
+    <Property Type="Int32" Name="category_id" Nullable="false" />
+    <Property Type="String" Name="category_name" Nullable="false" MaxLength="255" />
+  </ComplexType>
+</Schema>
